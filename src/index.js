@@ -8,13 +8,14 @@ function toReadable(number) {
   let ones = number[number.length-1];
   let tens = number[number.length-2];
   let hundreds = number[number.length-3];
-  let thousands = number.slice(0, -3);
+  let thousands = number.slice(-6, -3);
   let thousandsReadable;
-  let millions = number.slice(0, -6);
+  let millions = number.slice(-9, -6);
   let millionsReadable;
 
   if (thousands) {
     thousandsReadable = toReadable(thousands);
+    console.log(thousandsReadable);
   }
   if (millions) {
     millionsReadable = toReadable(millions);
@@ -40,7 +41,7 @@ function toReadable(number) {
   }
 
   else if (number < 1000000000){
-    return millionsReadable + ' million ' + millionsReadable + ' thousand ' + arrFirsts[hundreds] + ' hundred ' + arrTens[tens] + ' ' + arrFirsts[ones];
+    return millionsReadable + ' million ' + thousandsReadable + ' thousand ' + arrFirsts[hundreds] + ' hundred ' + arrTens[tens] + ' ' + arrFirsts[ones];
   }
 
   else {
