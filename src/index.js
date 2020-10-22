@@ -1,8 +1,8 @@
 //module.exports = function toReadable(number) {
 function toReadable(number) {
   number = '' + number;
-  let arrFirsts = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
-  let arrTens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  let arrFirsts = ['', ' one', ' two', ' three', ' four', ' five', ' six', ' seven', ' eight', ' nine', ' ten', ' eleven', ' twelve', ' thirteen', ' fourteen', ' fifteen', ' sixteen', ' seventeen', ' eighteen', ' nineteen'];
+  let arrTens = ['', '', ' twenty', ' thirty', ' forty', ' fifty', ' sixty', ' seventy', ' eighty', ' ninety'];
 
   let ones = number[number.length-1];
   let tens = number[number.length-2];
@@ -14,6 +14,9 @@ function toReadable(number) {
 
   if ( !Number.isInteger(+number)) {
     return 'float numbers not supported';
+  }
+  if (tens == 1) {
+    ones = number.slice(number.length-2);
   }
   if (thousands) {
     thousandsReadable = toReadable(thousands);
@@ -32,16 +35,16 @@ function toReadable(number) {
     return arrFirsts[number];
 
   } else if (number < 100){
-    return arrTens[tens] + ' ' + arrFirsts[ones];
+    return arrTens[tens] + arrFirsts[ones];
 
   } else if (number < 1000){
-    return arrFirsts[hundreds] + ' hundred ' + arrTens[tens] + ' ' + arrFirsts[ones];
+    return arrFirsts[hundreds] + ' hundred' + arrTens[tens] + arrFirsts[ones];
 
   } else if (number < 1000000){
-    return thousandsReadable + ' thousand ' + arrFirsts[hundreds] + ' hundred ' + arrTens[tens] + ' ' + arrFirsts[ones];
+    return thousandsReadable + ' thousand' + arrFirsts[hundreds] + ' hundred' + arrTens[tens] + arrFirsts[ones];
 
   } else if (number < 1000000000){
-    return millionsReadable + ' million ' + thousandsReadable + ' thousand ' + arrFirsts[hundreds] + ' hundred ' + arrTens[tens] + ' ' + arrFirsts[ones];
+    return millionsReadable + ' million' + thousandsReadable + ' thousand' + arrFirsts[hundreds] + ' hundred' + arrTens[tens] + arrFirsts[ones];
 
   } else {
     return 'wrong input';
@@ -49,4 +52,4 @@ function toReadable(number) {
 
 }
 
-console.log ( toReadable(576.5) );
+console.log ( toReadable(654321) );
