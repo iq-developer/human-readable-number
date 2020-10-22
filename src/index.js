@@ -3,32 +3,52 @@ function toReadable(number) {
   number = '' + number;
   let arrFirsts = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
   let arrTens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
-  let arrBig = ['hundred', 'thousand', 'million', 'billion', 'trillion'];
-  let result = '';
+  //let arrBig = ['hundred', 'thousand', 'million', 'billion', 'trillion'];
+
   let ones = number[number.length-1];
   let tens = number[number.length-2];
   let hundreds = number[number.length-3];
   let thousands = number.slice(0, -3);
+  let thousandsReadable;
+  let millions = number.slice(0, -6);
+  let millionsReadable;
 
-  if (number === 0){
-    result = 'zero';
+  if (thousands) {
+    thousandsReadable = toReadable(thousands);
+  }
+  if (millions) {
+    millionsReadable = toReadable(millions);
+  }
+
+  if (number < 0){
+    return 'not supported';
+
+  } else if (number === 0){
+    return 'zero';
 
   } else if (number < 20){
-    result = arrFirsts[number];
+    return arrFirsts[number];
 
   } else if (number < 100){
-    result = arrTens[tens] + ' ' + arrFirsts[ones];
+    return arrTens[tens] + ' ' + arrFirsts[ones];
 
-  }  else if (number < 1000){
-    result = arrFirsts[hundreds] + ' ' + arrBig[0] + ' ' + arrTens[tens] + ' ' + arrFirsts[ones];
+  } else if (number < 1000){
+    return arrFirsts[hundreds] + ' hundred ' + arrTens[tens] + ' ' + arrFirsts[ones];
+
+  } else if (number < 1000000){
+    return thousandsReadable + ' thousand ' + arrFirsts[hundreds] + ' hundred ' + arrTens[tens] + ' ' + arrFirsts[ones];
   }
 
-  else if (number < 1000000){
-    thousandsReadable = toReadable(thousands);
-
+  else if (number < 1000000000){
+    return millionsReadable + ' million ' + millionsReadable + ' thousand ' + arrFirsts[hundreds] + ' hundred ' + arrTens[tens] + ' ' + arrFirsts[ones];
   }
 
-  return result;
+  else {
+    return 'too big number';
+  }
+
+
+
 }
 
-console.log ( toReadable(123) );
+console.log ( toReadable(3176523) );
