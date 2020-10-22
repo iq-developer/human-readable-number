@@ -3,7 +3,6 @@ function toReadable(number) {
   number = '' + number;
   let arrFirsts = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
   let arrTens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
-  //let arrBig = ['hundred', 'thousand', 'million', 'billion', 'trillion'];
 
   let ones = number[number.length-1];
   let tens = number[number.length-2];
@@ -13,18 +12,20 @@ function toReadable(number) {
   let millions = number.slice(-9, -6);
   let millionsReadable;
 
+  if ( !Number.isInteger(+number)) {
+    return 'float numbers not supported';
+  }
   if (thousands) {
     thousandsReadable = toReadable(thousands);
-    console.log(thousandsReadable);
   }
   if (millions) {
     millionsReadable = toReadable(millions);
   }
 
   if (number < 0){
-    return 'not supported';
+    return 'minus ' + toReadable(Math.abs(number));
 
-  } else if (number === 0){
+  } else if (number == 0){
     return 'zero';
 
   } else if (number < 20){
@@ -38,18 +39,14 @@ function toReadable(number) {
 
   } else if (number < 1000000){
     return thousandsReadable + ' thousand ' + arrFirsts[hundreds] + ' hundred ' + arrTens[tens] + ' ' + arrFirsts[ones];
-  }
 
-  else if (number < 1000000000){
+  } else if (number < 1000000000){
     return millionsReadable + ' million ' + thousandsReadable + ' thousand ' + arrFirsts[hundreds] + ' hundred ' + arrTens[tens] + ' ' + arrFirsts[ones];
+
+  } else {
+    return 'wrong input';
   }
-
-  else {
-    return 'too big number';
-  }
-
-
 
 }
 
-console.log ( toReadable(3176523) );
+console.log ( toReadable(576.5) );
